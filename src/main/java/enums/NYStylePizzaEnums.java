@@ -1,0 +1,9 @@
+package enums;
+
+public enum NYStylePizzaEnums {
+    NY_STYLE_CHEESE_PIZZA,
+    NY_STYLE_PEPPERONI_PIZZA,
+    NY_STYLE_CLAM_PIZZA,
+    NY_STYLE_VEGGIE_PIZZA,
+    NY_STYLE_DEFAULT_PIZZA
+}
