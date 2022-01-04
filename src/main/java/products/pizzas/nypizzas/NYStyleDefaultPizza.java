@@ -1,36 +1,28 @@
 package products.pizzas.nypizzas;
 
 import enums.NYStylePizzaEnums;
-import lombok.Builder;
+import factories.ingredients.IngredientFactory;
 import lombok.extern.log4j.Log4j2;
+import products.ingredients.cheese.Cheese;
+import products.ingredients.dough.Dough;
+import products.ingredients.pepperoni.Pepperoni;
 import products.pizzas.BasePizza;
 
 @Log4j2
-@Builder
 public class NYStyleDefaultPizza extends BasePizza {
+
+    public NYStyleDefaultPizza(IngredientFactory ingredientFactory) {
+        super(ingredientFactory, NYStylePizzaEnums.NY_STYLE_DEFAULT_PIZZA.name());
+    }
 
     @Override
     public void prepare() {
-        log.info("Preparing NYStyleDefaultPizza");
-    }
-
-    @Override
-    public void bake() {
-        log.info("Baking NYStyleDefaultPizza");
-    }
-
-    @Override
-    public void cut() {
-        log.info("Cutting NYStyleDefaultPizza");
-    }
-
-    @Override
-    public void pack() {
-        log.info("Packing NYStyleDefaultPizza");
-    }
-
-    @Override
-    public String getName() {
-        return NYStylePizzaEnums.NY_STYLE_DEFAULT_PIZZA.name();
+        log.info("Preparing {}", getName());
+        final Dough dough = getIngredientFactory().createDough();
+        final Pepperoni pepperoni = getIngredientFactory().createPepperoni();
+        final Cheese cheese = getIngredientFactory().createCheese();
+        getIngredientList().add(dough);
+        getIngredientList().add(pepperoni);
+        getIngredientList().add(cheese);
     }
 }

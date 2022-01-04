@@ -1,35 +1,24 @@
 package products.pizzas.nypizzas;
 
 import enums.NYStylePizzaEnums;
-import lombok.Builder;
+import factories.ingredients.IngredientFactory;
 import lombok.extern.log4j.Log4j2;
-import products.pizzas.Pizza;
+import products.ingredients.clam.Clam;
+import products.ingredients.dough.Dough;
+import products.pizzas.BasePizza;
 
 @Log4j2
-@Builder
-public class NYStyleClamPizza implements Pizza {
+public class NYStyleClamPizza extends BasePizza {
+    public NYStyleClamPizza(IngredientFactory ingredientFactory) {
+        super(ingredientFactory, NYStylePizzaEnums.NY_STYLE_CLAM_PIZZA.name());
+    }
+
     @Override
     public void prepare() {
-        log.info("Preparing NYStyleClamPizza");
-    }
-
-    @Override
-    public void bake() {
-        log.info("Baking NYStyleClamPizza");
-    }
-
-    @Override
-    public void cut() {
-        log.info("Cutting NYStyleClamPizza");
-    }
-
-    @Override
-    public void pack() {
-        log.info("Packing NYStyleClamPizza");
-    }
-
-    @Override
-    public String getName() {
-        return NYStylePizzaEnums.NY_STYLE_CLAM_PIZZA.name();
+        log.info("Preparing {}", getName());
+        final Dough dough = getIngredientFactory().createDough();
+        final Clam clam = getIngredientFactory().createClam();
+        getIngredientList().add(dough);
+        getIngredientList().add(clam);
     }
 }

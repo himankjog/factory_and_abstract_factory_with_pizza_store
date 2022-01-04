@@ -1,35 +1,24 @@
 package products.pizzas.californiapizzas;
 
 import enums.CaliforniaStylePizzaEnums;
-import lombok.Builder;
+import factories.ingredients.IngredientFactory;
 import lombok.extern.log4j.Log4j2;
-import products.pizzas.Pizza;
+import products.ingredients.cheese.Cheese;
+import products.ingredients.dough.Dough;
+import products.pizzas.BasePizza;
 
 @Log4j2
-@Builder
-public class CaliforniaStyleCheesePizza implements Pizza {
+public class CaliforniaStyleCheesePizza extends BasePizza {
+    public CaliforniaStyleCheesePizza(IngredientFactory ingredientFactory) {
+        super(ingredientFactory, CaliforniaStylePizzaEnums.CALIFORNIA_STYLE_CHEESE_PIZZA.name());
+    }
+
     @Override
     public void prepare() {
-        log.info("Preparing CaliforniaStyleCheesePizza");
-    }
-
-    @Override
-    public void bake() {
-        log.info("Baking CaliforniaStyleCheesePizza");
-    }
-
-    @Override
-    public void cut() {
-        log.info("Cutting CaliforniaStyleCheesePizza");
-    }
-
-    @Override
-    public void pack() {
-        log.info("Packing CaliforniaStyleCheesePizza");
-    }
-
-    @Override
-    public String getName() {
-        return CaliforniaStylePizzaEnums.CALIFORNIA_STYLE_CHEESE_PIZZA.name();
+        log.info("Preparing {}", getName());
+        final Dough dough = getIngredientFactory().createDough();
+        final Cheese cheese = getIngredientFactory().createCheese();
+        getIngredientList().add(dough);
+        getIngredientList().add(cheese);
     }
 }

@@ -1,36 +1,33 @@
 package products.pizzas.californiapizzas;
 
 import enums.CaliforniaStylePizzaEnums;
-import lombok.Builder;
+import factories.ingredients.IngredientFactory;
 import lombok.extern.log4j.Log4j2;
+import products.ingredients.cheese.Cheese;
+import products.ingredients.dough.Dough;
+import products.ingredients.pepperoni.Pepperoni;
+import products.ingredients.veggie.Veggie;
 import products.pizzas.BasePizza;
 
+import java.util.List;
+
 @Log4j2
-@Builder
 public class CaliforniaStyleDefaultPizza extends BasePizza {
+
+    public CaliforniaStyleDefaultPizza(IngredientFactory ingredientFactory) {
+        super(ingredientFactory, CaliforniaStylePizzaEnums.CALIFORNIA_STYLE_DEFAULT_PIZZA.name());
+    }
 
     @Override
     public void prepare() {
-        log.info("Preparing CaliforniaStyleDefaultPizza");
-    }
-
-    @Override
-    public void bake() {
-        log.info("Baking CaliforniaStyleDefaultPizza");
-    }
-
-    @Override
-    public void cut() {
-        log.info("Cutting CaliforniaStyleDefaultPizza");
-    }
-
-    @Override
-    public void pack() {
-        log.info("Packing CaliforniaStyleDefaultPizza");
-    }
-
-    @Override
-    public String getName() {
-        return CaliforniaStylePizzaEnums.CALIFORNIA_STYLE_DEFAULT_PIZZA.name();
+        log.info("Preparing {}", getName());
+        final Dough dough = getIngredientFactory().createDough();
+        final Cheese cheese = getIngredientFactory().createCheese();
+        final Pepperoni pepperoni = getIngredientFactory().createPepperoni();
+        final List<Veggie> veggies = getIngredientFactory().createVeggies();
+        getIngredientList().add(dough);
+        getIngredientList().add(cheese);
+        getIngredientList().add(pepperoni);
+        getIngredientList().addAll(veggies);
     }
 }

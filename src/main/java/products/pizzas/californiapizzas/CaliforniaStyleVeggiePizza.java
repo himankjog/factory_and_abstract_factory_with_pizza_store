@@ -1,35 +1,26 @@
 package products.pizzas.californiapizzas;
 
 import enums.CaliforniaStylePizzaEnums;
-import lombok.Builder;
+import factories.ingredients.IngredientFactory;
 import lombok.extern.log4j.Log4j2;
-import products.pizzas.Pizza;
+import products.ingredients.dough.Dough;
+import products.ingredients.veggie.Veggie;
+import products.pizzas.BasePizza;
+
+import java.util.List;
 
 @Log4j2
-@Builder
-public class CaliforniaStyleVeggiePizza implements Pizza {
+public class CaliforniaStyleVeggiePizza extends BasePizza {
+    public CaliforniaStyleVeggiePizza(IngredientFactory ingredientFactory) {
+        super(ingredientFactory, CaliforniaStylePizzaEnums.CALIFORNIA_STYLE_VEGGIE_PIZZA.name());
+    }
+
     @Override
     public void prepare() {
-        log.info("Preparing CaliforniaStyleVeggiePizza");
-    }
-
-    @Override
-    public void bake() {
-        log.info("Baking CaliforniaStyleVeggiePizza");
-    }
-
-    @Override
-    public void cut() {
-        log.info("Cutting CaliforniaStyleVeggiePizza");
-    }
-
-    @Override
-    public void pack() {
-        log.info("Packing CaliforniaStyleVeggiePizza");
-    }
-
-    @Override
-    public String getName() {
-        return CaliforniaStylePizzaEnums.CALIFORNIA_STYLE_VEGGIE_PIZZA.name();
+        log.info("Preparing {}", getName());
+        final Dough dough = getIngredientFactory().createDough();
+        final List<Veggie> veggies = getIngredientFactory().createVeggies();
+        getIngredientList().add(dough);
+        getIngredientList().addAll(veggies);
     }
 }

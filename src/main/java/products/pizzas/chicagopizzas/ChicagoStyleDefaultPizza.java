@@ -1,36 +1,28 @@
 package products.pizzas.chicagopizzas;
 
 import enums.ChicagoStylePizzaEnums;
-import lombok.Builder;
+import factories.ingredients.IngredientFactory;
 import lombok.extern.log4j.Log4j2;
+import products.ingredients.cheese.Cheese;
+import products.ingredients.dough.Dough;
+import products.ingredients.pepperoni.Pepperoni;
 import products.pizzas.BasePizza;
 
 @Log4j2
-@Builder
 public class ChicagoStyleDefaultPizza extends BasePizza {
+
+    public ChicagoStyleDefaultPizza(IngredientFactory ingredientFactory) {
+        super(ingredientFactory, ChicagoStylePizzaEnums.CHICAGO_STYLE_DEFAULT_PIZZA.name());
+    }
 
     @Override
     public void prepare() {
-        log.info("Preparing ChicagoStyleDefaultPizza");
-    }
-
-    @Override
-    public void bake() {
-        log.info("Baking ChicagoStyleDefaultPizza");
-    }
-
-    @Override
-    public void cut() {
-        log.info("Cutting ChicagoStyleDefaultPizza");
-    }
-
-    @Override
-    public void pack() {
-        log.info("Packing ChicagoStyleDefaultPizza");
-    }
-
-    @Override
-    public String getName() {
-        return ChicagoStylePizzaEnums.CHICAGO_STYLE_DEFAULT_PIZZA.name();
+        log.info("Preparing {}", getName());
+        final Dough dough = getIngredientFactory().createDough();
+        final Cheese cheese = getIngredientFactory().createCheese();
+        final Pepperoni pepperoni = getIngredientFactory().createPepperoni();
+        getIngredientList().add(dough);
+        getIngredientList().add(cheese);
+        getIngredientList().add(pepperoni);
     }
 }

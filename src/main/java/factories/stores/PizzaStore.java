@@ -1,4 +1,4 @@
-package stores;
+package factories.stores;
 
 import products.pizzas.Pizza;
 
